@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
 
     <!-- Castle client side fingerprinting -->
-    <script src="@("https://d2t77mnxyo7adj.cloudfront.net/v1/c.js?" + Configuration["CastleApiSecret"])"></script>
+    <script src="@("https://d2t77mnxyo7adj.cloudfront.net/v1/c.js?" + Configuration["Castle:AppId"])"></script>
     
     <!-- Update Castle's client side with user details -->
     @if (SignInManager.IsSignedIn(User))
@@ -33,7 +33,7 @@
 
         <script>            
             _castle('identify', '@(userId)'); // Set the current user's id
-            _castle('secure', '@Castle.Signature.Compute(Configuration["CastleApiSecret"], userId)'); // Set signature for secure mode
+            _castle('secure', '@Castle.Signature.Compute(Configuration["Castle:ApiSecret"], userId)'); // Set signature for secure mode
         </script>
     }
     </head>

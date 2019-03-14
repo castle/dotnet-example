@@ -22,4 +22,4 @@ The example application applies the steps described for the [Castle Baseline Int
 * `Startup.cs` Ioc
 * `Areas/Identity/Pages/Account/Login.cshtml.cs` Castle SDK calls
 * `Pages/Shared/_Layout.cshtml` Client-side Castle
-* `appsettings.json` Your Castle API secret
+* `appsettings.json` Your Castle API secret and App ID
