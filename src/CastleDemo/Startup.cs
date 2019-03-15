@@ -43,7 +43,7 @@ namespace CastleDemo
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // Castle IoC setup
-            services.AddSingleton(new CastleClient(new CastleConfiguration(Configuration["CastleApiSecret"])));
+            services.AddSingleton(new CastleClient(new CastleConfiguration(Configuration["Castle:ApiSecret"])));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
