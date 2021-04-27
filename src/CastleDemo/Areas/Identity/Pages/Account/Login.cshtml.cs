@@ -24,7 +24,7 @@ namespace CastleDemo.Areas.Identity.Pages.Account
         private readonly CastleClient _castleClient;
 
         public LoginModel(
-            SignInManager<IdentityUser> signInManager, 
+            SignInManager<IdentityUser> signInManager,
             ILogger<LoginModel> logger,
             ApplicationDbContext context,
             CastleClient castleClient)
@@ -84,7 +84,7 @@ namespace CastleDemo.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);                
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
 
                 if (result.Succeeded)
                 {
@@ -106,7 +106,7 @@ namespace CastleDemo.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    // Castle Track $login.failed
+                    // Castle Track $login.attempted
                     _castleClient.Track(CreateCastleActionRequest("$login")).Forget();
 
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
