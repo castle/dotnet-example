@@ -91,7 +91,7 @@ namespace CastleDemo.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
 
                     // Castle Authenticate $login.succeeded
-                    _castleClient.Authenticate(CreateCastleActionRequest(Castle.Events.LoginSucceeded)).Forget();
+                    _castleClient.Authenticate(CreateCastleActionRequest("$login")).Forget();
 
                     return LocalRedirect(returnUrl);
                 }
@@ -107,7 +107,7 @@ namespace CastleDemo.Areas.Identity.Pages.Account
                 else
                 {
                     // Castle Track $login.failed
-                    _castleClient.Track(CreateCastleActionRequest(Castle.Events.LoginFailed)).Forget();
+                    _castleClient.Track(CreateCastleActionRequest("$login")).Forget();
 
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
@@ -121,18 +121,17 @@ namespace CastleDemo.Areas.Identity.Pages.Account
         private ActionRequest CreateCastleActionRequest(string castleEvent)
         {
             var user = _context.Users.SingleOrDefault(x => x.Email == Input.Email);
-
-            return new ActionRequest()
+            var opts = Castle.Options.FromHttpRequest(Request);
+            var ar = new ActionRequest()
             {
                 Event = castleEvent,
+                Status = "$succeeded",
+                Email = Input.Email,
                 UserId = user?.Id,
-                UserTraits = new Dictionary<string, string>()
-                {
-                    ["email"] = Input.Email
-                    // We should also include "registered_at", but the template web app doesn't save that information
-                },
-                Context = Castle.Context.FromHttpRequest(Request)
+                Options = opts
             };
+
+            return ar;
         }
     }
 }
